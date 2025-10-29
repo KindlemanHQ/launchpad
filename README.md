@@ -23,6 +23,14 @@ If you want pagination tho, you need to change the controller index to:
  @pagy, @boats = pagy(Boat.all, items: 5)
 ````
 
+..and if you want Ransack too:
+
+````ruby
+  @q = Bike.ransack(params[:q])
+  @boats = @q.result(distinct: true)
+  @pagy, @boats = pagy(@boats, items: 5)
+````
+
 For bootstrap pagination, You need to download this:
 ````ruby
 cd config/initializers 

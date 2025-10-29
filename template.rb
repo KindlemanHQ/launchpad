@@ -12,23 +12,22 @@ end
 def add_my_gems
   # utility
   gem 'dartsass-rails'
-  gem 'annotate'
+  gem 'annotaterb'
   gem 'ransack'
   gem 'name_of_person'  
   gem 'github-markup'
   gem 'commonmarker'
-  gem "solid_queue"
   # seo
   gem 'friendly_id'
-  gem  'sitemap_generator'
+  gem 'sitemap_generator'
   gem "meta-tags"
   gem 'breadcrumbs_on_rails'
   
   # views
-  gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
+  gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem', :branch => 'main'
   gem "simple_form"  
   gem 'pagy'
-  gem 'bootstrap_views_generator', github: 'asecondwill/bootstrap_views_generator'
+  gem 'bootstrap_views_generator', github: 'asecondwill/bootstrap_views_generator', :branch => 'main'
 
   # authentication
   gem 'devise' 
@@ -285,15 +284,26 @@ def do_pundit
   generate "pundit:install"
 end
 
-setup
-add_my_gems
+def do_annotate
+  generate "annotate_rb:install"
+end
 
-after_bundle do
+def install_importmap
+  rails_command "importmap:install"
+end
+
+def install_stimulus
+  rails_command "stimulus:install"  
+end
+
+def after_bundle_stuff
+     puts "AFTER_BUNDLE BLOCK EXECUTED"
   # bin stubs created before this, so can do bundle stuff. 
   staging
   email
   routes_for_home_and_dash
-  
+  install_importmap
+  install_stimulus  
   run_generators_for_seo
   setup_js
   add_storage_and_rich_text  
@@ -307,8 +317,22 @@ after_bundle do
   puts "ready for solid queue being done"
   solid_queue_setup
   do_pundit
+  do_annotate
   copy_files_from_template
+end
+
+setup
+add_my_gems
+say "Installing dependencies..."
+run "bundle install"
+
+say "Running post-install tasks..."
+after_bundle_stuff
+
+
+after_bundle do
   
+ # after_bundle_stuff
   
     
 
