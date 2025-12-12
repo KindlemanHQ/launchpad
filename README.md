@@ -110,3 +110,6 @@ add pagy to controller?
 
 pretender, but, teams? keep it secure. 
 
+
+
+TODO:  were initializers copied to the right folder? 

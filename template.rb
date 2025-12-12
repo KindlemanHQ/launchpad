@@ -91,9 +91,6 @@ def add_storage_and_rich_text
 end
 
 def bootstrap
-  # git submodule: "add -b main --name bootstrap https://github.com/twbs/bootstrap.git vendor/bootstrap"
-  # git add: '.'
-  # git commit: "-a -m 'Bootstrap as a submodule,'"
 
   #run "bin/importmap pin bootstrap"
   insert_into_file "config/importmap.rb", "pin 'bootstrap', to: 'bootstrap.min.js'
