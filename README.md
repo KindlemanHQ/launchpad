@@ -1,5 +1,5 @@
-# ITS LEAP
-Kick off a project like:
+# LaunchPad.  
+Launch a project like:
 ````bash
 rails new MyNewApp -a propshaft  -d sqlite3  -m ../leap/template.rb
 rails db:create & rails db:migrate 
@@ -14,7 +14,7 @@ use like:
 ````bash
 rails g bootstrap:install  --simpleform --pagination 
 ````
-So now you can do Scafold for your Crud like a bootstrap boss:
+So now you can do Scaffold for your CRUD like a bootstrap boss:
 ````ruby
 rails generate scaffold boats  name:string title:string content:text
 ````
