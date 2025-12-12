@@ -1,4 +1,4 @@
-module LeapHelper
+module LaunchpadHelper
 
   include Pagy::Frontend
 
