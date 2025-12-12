@@ -1,12 +1,12 @@
 # LaunchPad.  
 Launch a project like:
 ````bash
-rails new MyNewApp -a propshaft  -d sqlite3  -m ../leap/template.rb
+rails new MyNewApp -a propshaft  -d sqlite3  -m ../launchpad/template.rb
 rails db:create & rails db:migrate 
 ````
 or for real projects
 ````bash
-rails new appy24 -a propshaft  -d postgres  -m ../leap/template.rb
+rails new appy24 -a propshaft  -d postgres  -m ../launchpad/template.rb
 ````
 
 ## Bootstrap Views

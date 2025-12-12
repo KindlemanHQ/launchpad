@@ -35,6 +35,9 @@ def add_my_gems
   gem "pretender"
   # authorization
   gem "pundit"
+  # admin
+  gem "houston_cms", github: "KindlemanHQ/HoustonCMS", tag: "v0.1.16"
+  gem "marksmith"
 
   gem_group :development do
     gem 'hirb'
@@ -114,7 +117,8 @@ def dart_sass
   initializer 'dartsass.rb', <<-CODE
   Rails.application.config.dartsass.builds = {
     "application.scss"        => "application.css",
-    "site.scss"       => "site.css"
+    "site.scss"       => "site.css",
+    "admin.scss" => "admin.css"
   }
   CODE
 
@@ -125,7 +129,7 @@ end
 def devise
   
   generate "devise:install"  
-  generate :devise, "User", "first_name", "last_name", "admin:boolean", "time_zone:string"
+  generate :devise, "User", "first_name", "last_name", "site_admin:boolean", "time_zone:string", "debug:boolean"
   #route "  devise_for :users "
   git add: '.'
   git commit: "-a -m 'setup devise '"
@@ -251,7 +255,8 @@ def impersonation
 end
 
 def advanced_select
-  run " bin/importmap pin tom-select --from jsdelivr  "
+  insert_into_file "config/importmap.rb", "pin \"tom-select\", to: \"https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js\"
+  \n"
   content = <<~RUBY
     import  'tom-select'
     addEventListener("turbo:load", (event) => {
@@ -293,9 +298,20 @@ def install_stimulus
   rails_command "stimulus:install"  
 end
 
+def houston_setup  
+  say "Installing houston...", :green
+  generate "houston_cms:install"
+  git add: '.'
+  git commit: "-a -m 'install houston cms'"
+  say "Houston installed!", :green
+end
+
 def after_bundle_stuff
-     puts "AFTER_BUNDLE BLOCK EXECUTED"
+  puts "AFTER_BUNDLE STUFF EXECUTED"
   # bin stubs created before this, so can do bundle stuff. 
+  puts "About to call houston_setup..."
+  houston_setup
+  puts "Finished houston_setup, moving to staging..."
   staging
   email
   routes_for_home_and_dash
@@ -316,6 +332,7 @@ def after_bundle_stuff
   do_pundit
   do_annotate
   copy_files_from_template
+  
 end
 
 setup
