@@ -218,7 +218,8 @@ def copy_files_from_template
   git commit: "-a -m 'add breadcrumbs '"
   
   copy_file "locales/en.rb"
-  copy_file "initializers/time_formats.rb"
+  copy_file "config/initializers/time_formats.rb"
+  copy_file "config/initializers/houston_cms.rb"
   git add: '.'
   git commit: "-a -m 'add time formats '"
 
